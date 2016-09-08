@@ -9,5 +9,7 @@ public enum SC2Tournament {
     GSL_Code_S,
     GSL_Code_A,
     Proleague,
-    Starleague
+    Starleague,
+    IEM,
+    WCS
 }

@@ -1,19 +1,21 @@
-package com.supervilain.gamecrawlin.crawler.analyze;
+package com.supervilain.gamecrawlin.crawler.analyzer;
 
 import com.supervilain.gamecrawlin.Enums.*;
 import com.supervilain.gamecrawlin.Model.SC2Game;
+import org.springframework.stereotype.Component;
 
 /**
  * @author a600413 - Christophe Vilain
  *         01/09/2016
  */
+@Component
 public class GameClassifier {
 
     private static String separator = String.valueOf('_');
     private static String spacing = String.valueOf(' ');
     private static String[] editions = {"2015", "2016", "2017"};
 
-    public static SC2Game classifySC2Game(String title) {
+    public SC2Game classifySC2Game(String title) {
         SC2Game game = new SC2Game();
         boolean foundPlayer1 = false;
         for (int i = 0; i < KnownSC2Players.values().length; i++) {

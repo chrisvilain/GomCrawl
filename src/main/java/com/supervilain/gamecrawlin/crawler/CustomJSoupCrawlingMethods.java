@@ -1,21 +1,38 @@
 package com.supervilain.gamecrawlin.crawler;
 
+import java.io.IOException;
 import java.util.HashMap;
 
-import com.supervilain.gamecrawlin.Enums.KnownSC2Players;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.supervilain.gamecrawlin.Enums.KnownSC2Players;
 import com.supervilain.gamecrawlin.Enums.SC2Tournament;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 /**
  * @author a600413 - Christophe Vilain
  *         01/09/2016
  */
-public class CustomJSoupCrawler {
+
+@Component
+public class CustomJSoupCrawlingMethods {
 
     private String separator = String.valueOf('_');
+    private String superClassifierSC2 = "StarCraft 2";
+
+    public Document getTo(String url) {
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(url).get();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return doc;
+    }
 
     public HashMap<String, String> retrievePageSC2HyperLinks(Document document) {
         HashMap<String, String> SC2HyperLinks = null;
@@ -29,8 +46,10 @@ public class CustomJSoupCrawler {
         return SC2HyperLinks;
     }
 
-
     public boolean isASC2Game(String title) {
+        if (title.contains(superClassifierSC2)) {
+            return true;
+        }
         for (SC2Tournament tournament: SC2Tournament.values()) {
             String[] splitTournament = tournament.toString().split(separator);
             for (String elem: splitTournament) {
