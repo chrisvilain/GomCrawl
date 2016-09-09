@@ -2,7 +2,10 @@ package com.supervilain.gamecrawlin.crawler;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
+import com.pengyifan.commons.collections.tree.TreeNode;
+import com.supervilain.gamecrawlin.Model.ProcessTuple;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

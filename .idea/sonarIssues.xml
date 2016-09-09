@@ -8,12 +8,77 @@
             <set />
           </value>
         </entry>
+        <entry key="/a.dummy">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/pom.xml">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Enums/CompetitionStage.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Enums/KnownSC2Players.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Enums/MatchUps.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Enums/SC2EditionDetails.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Enums/SC2Tournament.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Enums/SC2TournamentSeason.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Main.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Model/GameTree.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Model/ProcessTuple.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Model/SC2Game.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Model/YoutubePage.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Repository/Repository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/Repository/SC2GameRepository.java">
           <value>
             <set />
           </value>
@@ -38,7 +103,77 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/control/analyze/GameAnalyzer.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/control/analyze/PageParser.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/crawl/PageParser.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/crawler/CrawlerLogic.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/crawler/CrawlerOne.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/crawler/CustomJSoupCrawler.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/crawler/CustomJSoupCrawlingMethods.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/crawler/analyze/GameClassifier.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/crawler/analyzer/GameClassifier.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/jdbc/CustomDbSupport.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/jdbc/JDBCAccessor.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/jdbc/JdbcAccessor.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/supervilain/gamecrawlin/jdbc/SC2GameRepository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Rep/hce-product-mpp/hce-core/hce-core-mo/src/test/java/com/worldline/fpl/hce/core/mo/utils/TestFileToBytes.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Rep/hce-product-mpp/hce-webapp/src/main/config/acacia/r4/CHANGES">
           <value>
             <set />
           </value>

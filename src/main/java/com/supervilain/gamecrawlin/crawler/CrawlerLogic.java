@@ -1,14 +1,18 @@
 package com.supervilain.gamecrawlin.crawler;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import com.supervilain.gamecrawlin.crawler.analyzer.GameClassifier;
-import com.supervilain.gamecrawlin.jdbc.CustomDbSupport;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.pengyifan.commons.collections.tree.TreeNode;
+import com.supervilain.gamecrawlin.Model.ProcessTuple;
+import com.supervilain.gamecrawlin.crawler.analyzer.GameClassifier;
+import com.supervilain.gamecrawlin.jdbc.CustomDbSupport;
 
 /**
  * @author a600413 - Christophe Vilain
@@ -27,13 +31,39 @@ public class CrawlerLogic {
     @Autowired
     private GameClassifier gameClassifier;
 
+    private volatile boolean logicReadyToProceed = true;
+    private volatile boolean proceed = true;
     private final String startUrl = "";
     private final String intermediateStorageLocation = "";
-    private boolean proceed = true;
+
+    //TODO experimental
+    public void nodeBoot(String startUrl) {
+        Document doc = methodsRepo.getTo(startUrl);
+        nodeLogic(new TreeNode(new ProcessTuple(doc.title(), startUrl)));
+    }
 
     public void boot(String startUrl) {
         HashMap<String, String> sortedGames = sort(crawl(startUrl));
         logic(sortedGames);
+    }
+
+    public void nodeLogic(TreeNode rootNode) {
+        if(proceed) {
+            while (!this.isLogicReadyToProceed()) {}
+            ProcessTuple tuple = (ProcessTuple) rootNode.getObject();
+            HashMap map = methodsRepo.retrievePageSC2HyperLinks(methodsRepo.getTo(tuple.getValue()));
+            prepareNextStep(sort(rootNode, map));
+        } else {
+            log.info("Crawler stopped.");
+        }
+    }
+
+    public void prepareNextStep(List<TreeNode> list) {
+        this.setLogicReadyToProceed(false);
+        for (TreeNode node: list) {
+            nodeLogic(node);
+        }
+        this.setLogicReadyToProceed(true);
     }
 
     public void logic(HashMap<String, String> map) {
@@ -64,6 +94,22 @@ public class CrawlerLogic {
         return methodsRepo.retrievePageSC2HyperLinks(doc);
     }
 
+    //TODO experimental
+    public List<TreeNode> sort(TreeNode parentNode, HashMap<String, String> games) {
+        List<TreeNode> sortedList = null;
+        for (Map.Entry entry: games.entrySet()) {
+            if (customDbSupport.hrefExistsInDb(entry.getValue().toString())) {
+                log.info("The SC2 game is already in database : {}", entry.getKey().toString());
+            } else {
+                TreeNode node = new TreeNode(new ProcessTuple(entry.getKey().toString(), entry.getValue().toString()));
+                node.setParent(parentNode);
+                sortedList.add(node);
+                log.info("A new SC2 game was found.");
+            }
+        }
+        return sortedList;
+    }
+
     public HashMap sort(HashMap<String, String> map) {
         HashMap sorted = new HashMap();
         for (Map.Entry entry: map.entrySet()) {
@@ -78,4 +124,19 @@ public class CrawlerLogic {
         return sorted;
     }
 
+    public boolean isLogicReadyToProceed() {
+        return logicReadyToProceed;
+    }
+
+    public void setLogicReadyToProceed(boolean logicReadyToProceed) {
+        this.logicReadyToProceed = logicReadyToProceed;
+    }
+
+    public boolean isProceed() {
+        return proceed;
+    }
+
+    public void setProceed(boolean proceed) {
+        this.proceed = proceed;
+    }
 }

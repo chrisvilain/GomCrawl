@@ -14,6 +14,17 @@
         <version>1.3.6.RELEASE</version>
     </parent>
 
+    <repositories>
+        <repository>
+            <id>oss-sonatype</id>
+            <name>oss-sonatype</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>edu.uci.ics</groupId>
@@ -41,6 +52,12 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.pengyifan</groupId>
+            <artifactId>pengyifan-commons</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
