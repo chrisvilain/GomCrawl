@@ -26,6 +26,7 @@ public class CustomJSoupCrawlingMethods {
 
     private String separator = String.valueOf('_');
     private String superClassifierSC2 = "StarCraft 2";
+    private String baseYoutubeUrl = "https://www.youtube.com";
 
     public Document getTo(String url) {
         Document doc = null;
@@ -38,12 +39,12 @@ public class CustomJSoupCrawlingMethods {
     }
 
     public HashMap<String, String> retrievePageSC2HyperLinks(Document document) {
-        HashMap<String, String> SC2HyperLinks = null;
+        HashMap<String, String> SC2HyperLinks = new HashMap<String, String>();
         Elements links = document.getElementsByTag("a");
         for (Element hyperlink: links) {
             String title = hyperlink.attr("title");
             if(isASC2Game(title)) {
-                SC2HyperLinks.put(title, hyperlink.toString());
+                SC2HyperLinks.put(title, baseYoutubeUrl + hyperlink.attr("href").toString());
             }
         }
         return SC2HyperLinks;

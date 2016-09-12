@@ -1,8 +1,10 @@
 package com.supervilain.gamecrawlin.crawler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -13,11 +15,19 @@ import com.pengyifan.commons.collections.tree.TreeNode;
 import com.supervilain.gamecrawlin.Model.ProcessTuple;
 import com.supervilain.gamecrawlin.crawler.analyzer.GameClassifier;
 import com.supervilain.gamecrawlin.jdbc.CustomDbSupport;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 /**
  * @author a600413 - Christophe Vilain
  *         07/09/2016
  */
+@Component
+@ComponentScan(basePackages = {"com.supervilain.gamecrawlin"})
+@Configuration
+@EnableAutoConfiguration
 public class CrawlerLogic {
 
     private static final Logger log = LoggerFactory.getLogger(CrawlerLogic.class);
@@ -31,10 +41,12 @@ public class CrawlerLogic {
     @Autowired
     private GameClassifier gameClassifier;
 
-    private volatile boolean logicReadyToProceed = true;
     private volatile boolean proceed = true;
+    private static int policyMilliSecs = 500;
     private final String startUrl = "";
     private final String intermediateStorageLocation = "";
+
+    private static Integer counter = 0;
 
     //TODO experimental
     public void nodeBoot(String startUrl) {
@@ -48,10 +60,16 @@ public class CrawlerLogic {
     }
 
     public void nodeLogic(TreeNode rootNode) {
-        if(proceed) {
-            while (!this.isLogicReadyToProceed()) {}
+        if(proceed && counter < 3) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(policyMilliSecs);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            log.info("Processing new batch, id " + counter);
             ProcessTuple tuple = (ProcessTuple) rootNode.getObject();
             HashMap map = methodsRepo.retrievePageSC2HyperLinks(methodsRepo.getTo(tuple.getValue()));
+            counter ++;
             prepareNextStep(sort(rootNode, map));
         } else {
             log.info("Crawler stopped.");
@@ -59,11 +77,9 @@ public class CrawlerLogic {
     }
 
     public void prepareNextStep(List<TreeNode> list) {
-        this.setLogicReadyToProceed(false);
         for (TreeNode node: list) {
             nodeLogic(node);
         }
-        this.setLogicReadyToProceed(true);
     }
 
     public void logic(HashMap<String, String> map) {
@@ -96,7 +112,7 @@ public class CrawlerLogic {
 
     //TODO experimental
     public List<TreeNode> sort(TreeNode parentNode, HashMap<String, String> games) {
-        List<TreeNode> sortedList = null;
+        List<TreeNode> sortedList = new ArrayList<TreeNode>();
         for (Map.Entry entry: games.entrySet()) {
             if (customDbSupport.hrefExistsInDb(entry.getValue().toString())) {
                 log.info("The SC2 game is already in database : {}", entry.getKey().toString());
@@ -111,25 +127,17 @@ public class CrawlerLogic {
     }
 
     public HashMap sort(HashMap<String, String> map) {
-        HashMap sorted = new HashMap();
+        HashMap<String, String> sorted = new HashMap<String, String>();
         for (Map.Entry entry: map.entrySet()) {
             if (customDbSupport.hrefExistsInDb(entry.getValue().toString())) {
                 log.info("The SC2 game is already in database : {}", entry.getKey().toString());
             } else {
-                sorted.put(entry.getKey(), entry.getValue());
+                sorted.put(entry.getKey().toString(), entry.getValue().toString());
                 customDbSupport.addAnSC2Game(gameClassifier.classifySC2Game(entry.getKey().toString()));
                 log.info("A new SC2 game was found and added to the database.");
             }
         }
         return sorted;
-    }
-
-    public boolean isLogicReadyToProceed() {
-        return logicReadyToProceed;
-    }
-
-    public void setLogicReadyToProceed(boolean logicReadyToProceed) {
-        this.logicReadyToProceed = logicReadyToProceed;
     }
 
     public boolean isProceed() {
